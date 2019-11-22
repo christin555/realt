@@ -8,15 +8,29 @@ namespace RealtOn
 {
     static class Program
     {
-        /// <summary>
-        /// Главная точка входа для приложения.
-        /// </summary>
+        enum Permissions
+        {
+            None,
+            Guest,
+            User,
+            Admin
+        }
+        class Person
+        {
+            public const Permissions Permission = Permissions.None;
+        }
+
+        class Guest : Person
+        {
+            public new const Permissions Permission = Permissions.Guest;
+        }
+      
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Auth());
         }
     }
 }
