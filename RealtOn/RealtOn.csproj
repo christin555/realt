@@ -33,8 +33,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dadata, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dadata.19.11.0\lib\net40\Dadata.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.3.1.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.3.1\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +62,12 @@
     <Compile Include="Auth.Designer.cs">
       <DependentUpon>Auth.cs</DependentUpon>
     </Compile>
+    <Compile Include="Clients.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Clients.Designer.cs">
+      <DependentUpon>Clients.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,13 +80,35 @@
     <Compile Include="main.Designer.cs">
       <DependentUpon>main.cs</DependentUpon>
     </Compile>
+    <Compile Include="ObjectFilter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ObjectFilter.Designer.cs">
+      <DependentUpon>ObjectFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Objects.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Objects.Designer.cs">
+      <DependentUpon>Objects.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SuggestClientDadata.cs" />
     <EmbeddedResource Include="Auth.resx">
       <DependentUpon>Auth.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Clients.resx">
+      <DependentUpon>Clients.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="main.resx">
       <DependentUpon>main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ObjectFilter.resx">
+      <DependentUpon>ObjectFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Objects.resx">
+      <DependentUpon>Objects.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -82,6 +120,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -97,6 +136,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="img\546636.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\стрелки вниз.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_50288.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_89501.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\197-1977312_copy-all-documents-svg-png-icon-free-download-documents-black-and-white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_145682.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_497845.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1200px-Emoji_u1f1f7.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\divider-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\poloska.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\users_44_icons_8433e9b6-6e8a-43f6-8d31-d12f8186886b_trademark.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
