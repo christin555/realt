@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace RealtOn
 {
     public partial class ObjectFilter : Form
-    {
+    {   public string filtr;
         public ObjectFilter()
         {
             InitializeComponent();
@@ -19,8 +19,11 @@ namespace RealtOn
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Form ifrm = new Objects(filtr);
+            ifrm.Show(); // отображаем Form1
+            this.Close();
+            // richTextBox1.Text =  dadata.SuggestAddress(textBox1.Text.ToString()).ToString();
            
-          // richTextBox1.Text =  dadata.SuggestAddress(textBox1.Text.ToString()).ToString();
         }
 
         private void comboBox1_KeyDown(object sender, KeyEventArgs e)
@@ -88,10 +91,45 @@ namespace RealtOn
         private void ObjectFilter_Load(object sender, EventArgs e)
         {
 
+          
+            for (int i = 1; i < 4; i++) //ремонт
+            {
+                Renovation.Items.Add(Object.GetDescription((Object.Renovation)i));
+            }
+
+            for (int i = 1; i < 5; i++) //стены
+            {
+                Wall.Items.Add(Object.GetDescription((Object.Wall)i));
+            }
+
+            for (int i = 1; i <3; i++) //сТАТус
+            {
+                Status.Items.Add(Object.GetDescription((Object.Status)i));
+            }
+            for (int i = 1; i < 5; i++) //сТАТус
+            {
+                Otype.Items.Add(Object.GetDescription((Object.OType)i));
+            }
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //  richTextBox1.Clear();
+            // foreach (var index in Renovation.CheckedIndices)
+            // Renovation.CheckedIndices;
+            List<string> params_f = new List<string>();
+          
+           if(Renovation.CheckedIndices.Count > 0)
+                params_f.Add("renovation in(" +  string.Join(",", Renovation.CheckedIndices.Cast<int>().ToArray().Select((x => x + 1))) + ")");
+           if (Status.CheckedIndices.Count > 0)
+                params_f.Add("Objects.status in(" + string.Join(",", Status.CheckedIndices.Cast<int>().ToArray().Select((x => x + 1))) + ")");
+           if (Otype.CheckedIndices.Count > 0)
+                params_f.Add("Objects.type in(" + string.Join(",", Otype.CheckedIndices.Cast<int>().ToArray().Select((x => x + 1))) + ")");
+           if (Wall.CheckedIndices.Count > 0)
+                params_f.Add("Objects.wall in(" + string.Join(",", Wall.CheckedIndices.Cast<int>().ToArray().Select((x => x + 1))) + ")");
+
+            filtr = "where "+ string.Join(" and ", params_f.ToArray());
+            richTextBox1.Text = filtr;
 
         }
 

@@ -12,11 +12,16 @@ namespace RealtOn
 {
     public partial class Objects : Form
     {
+        public string filtr;
         public Objects()
         {
             InitializeComponent();
         }
-
+        public Objects(string _filtr)
+        {
+            InitializeComponent();
+            filtr = _filtr;
+        }
         private void pictureBox5_Click(object sender, EventArgs e)
         {
 
@@ -36,12 +41,13 @@ namespace RealtOn
             dataGridView1.Columns["Contacts"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dataGridView1.RowTemplate.Height = 100;
             GetObjects(0);
+           
         }
 
         private void GetObjects(int page)
         {
            
-            var ds = Object.GetObjectsList(page).Tables[0];
+            var ds = Object.GetObjectsList(page, filtr).Tables[0];
             // Object.GetDescription(Object.Status.Active);
             //  dataGridView1.Rows.Add(ds.Rows);
             try
@@ -94,6 +100,27 @@ namespace RealtOn
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            Form ifrm = new ObjectFilter();
+            ifrm.Show(); // отображаем Form1
+            this.Close(); // закрываем Form2 (this - текущая форма)
+                          // не используйте данный способ, правильный ниже
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            filtr = "";
+            GetObjects(0);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            filtr = "where Tickets.userId=1";
+            GetObjects(0);
         }
     }
 }

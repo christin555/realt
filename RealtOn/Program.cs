@@ -8,29 +8,14 @@ namespace RealtOn
 {
     static class Program
     {
-        enum Permissions
-        {
-            None,
-            Guest,
-            User,
-            Admin
-        }
-        class Person
-        {
-            public const Permissions Permission = Permissions.None;
-        }
-
-        class Guest : Person
-        {
-            public new const Permissions Permission = Permissions.Guest;
-        }
+        
       
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new  ObjectFilter());
+            Application.Run(new  Auth());
         }
     }
 }

@@ -34,23 +34,36 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.checkedListBox2 = new System.Windows.Forms.CheckedListBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.Renovation = new System.Windows.Forms.CheckedListBox();
+            this.Rooms = new System.Windows.Forms.CheckedListBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.Wall = new System.Windows.Forms.CheckedListBox();
+            this.Otype = new System.Windows.Forms.CheckedListBox();
+            this.Status = new System.Windows.Forms.CheckedListBox();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.SuspendLayout();
             // 
             // textBox1
@@ -67,7 +80,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(99, 23);
             this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
+            this.button1.Text = "Найти";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -108,42 +121,30 @@
             this.label3.TabIndex = 9;
             this.label3.Text = "Ремонт";
             // 
-            // checkedListBox1
+            // Renovation
             // 
-            this.checkedListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Items.AddRange(new object[] {
-            "Черновая",
-            "Современный",
-            "Хз"});
-            this.checkedListBox1.Location = new System.Drawing.Point(279, 122);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(155, 60);
-            this.checkedListBox1.TabIndex = 10;
-            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            this.Renovation.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Renovation.FormattingEnabled = true;
+            this.Renovation.Location = new System.Drawing.Point(279, 122);
+            this.Renovation.Name = "Renovation";
+            this.Renovation.Size = new System.Drawing.Size(155, 60);
+            this.Renovation.TabIndex = 10;
+            this.Renovation.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
             // 
-            // checkedListBox2
+            // Rooms
             // 
-            this.checkedListBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBox2.FormattingEnabled = true;
-            this.checkedListBox2.Items.AddRange(new object[] {
+            this.Rooms.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Rooms.FormattingEnabled = true;
+            this.Rooms.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
             "4+"});
-            this.checkedListBox2.Location = new System.Drawing.Point(160, 122);
-            this.checkedListBox2.Name = "checkedListBox2";
-            this.checkedListBox2.Size = new System.Drawing.Size(45, 60);
-            this.checkedListBox2.TabIndex = 11;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(430, 117);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(45, 13);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Ремонт";
+            this.Rooms.Location = new System.Drawing.Point(160, 122);
+            this.Rooms.Name = "Rooms";
+            this.Rooms.Size = new System.Drawing.Size(45, 60);
+            this.Rooms.TabIndex = 11;
+            this.Rooms.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
             // 
             // panel1
             // 
@@ -158,6 +159,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(48, 450);
             this.panel1.TabIndex = 6;
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Image = global::RealtOn.Properties.Resources.users_44_icons_8433e9b6_6e8a_43f6_8d31_d12f8186886b_trademark;
+            this.pictureBox6.Location = new System.Drawing.Point(6, 11);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(35, 33);
+            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox6.TabIndex = 11;
+            this.pictureBox6.TabStop = false;
             // 
             // pictureBox5
             // 
@@ -211,15 +222,107 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // pictureBox6
+            // Wall
             // 
-            this.pictureBox6.Image = global::RealtOn.Properties.Resources.users_44_icons_8433e9b6_6e8a_43f6_8d31_d12f8186886b_trademark;
-            this.pictureBox6.Location = new System.Drawing.Point(6, 11);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(35, 33);
-            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox6.TabIndex = 11;
-            this.pictureBox6.TabStop = false;
+            this.Wall.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Wall.FormattingEnabled = true;
+            this.Wall.Location = new System.Drawing.Point(454, 122);
+            this.Wall.Name = "Wall";
+            this.Wall.Size = new System.Drawing.Size(155, 75);
+            this.Wall.TabIndex = 12;
+            this.Wall.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            // 
+            // Otype
+            // 
+            this.Otype.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Otype.FormattingEnabled = true;
+            this.Otype.Location = new System.Drawing.Point(615, 125);
+            this.Otype.Name = "Otype";
+            this.Otype.Size = new System.Drawing.Size(155, 75);
+            this.Otype.TabIndex = 13;
+            this.Otype.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            // 
+            // Status
+            // 
+            this.Status.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Status.FormattingEnabled = true;
+            this.Status.Location = new System.Drawing.Point(76, 216);
+            this.Status.Name = "Status";
+            this.Status.Size = new System.Drawing.Size(155, 60);
+            this.Status.TabIndex = 14;
+            this.Status.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(76, 305);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(358, 96);
+            this.richTextBox1.TabIndex = 15;
+            this.richTextBox1.Text = "";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(440, 216);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(71, 20);
+            this.textBox2.TabIndex = 16;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(339, 216);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(63, 20);
+            this.textBox3.TabIndex = 17;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(250, 219);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(71, 13);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "Площадь от ";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(414, 219);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(19, 13);
+            this.label5.TabIndex = 19;
+            this.label5.Text = "до";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(617, 216);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(71, 20);
+            this.numericUpDown1.TabIndex = 20;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(576, 218);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(33, 13);
+            this.label6.TabIndex = 21;
+            this.label6.Text = "Этаж";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(547, 263);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(62, 13);
+            this.label7.TabIndex = 22;
+            this.label7.Text = "Этажность";
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Location = new System.Drawing.Point(617, 263);
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(71, 20);
+            this.numericUpDown2.TabIndex = 23;
             // 
             // ObjectFilter
             // 
@@ -227,9 +330,20 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.numericUpDown2);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.checkedListBox2);
-            this.Controls.Add(this.checkedListBox1);
+            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.Status);
+            this.Controls.Add(this.Otype);
+            this.Controls.Add(this.Wall);
+            this.Controls.Add(this.Rooms);
+            this.Controls.Add(this.Renovation);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panel1);
@@ -239,15 +353,19 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Name = "ObjectFilter";
-            this.Text = "Object";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Фильтр";
             this.Load += new System.EventHandler(this.ObjectFilter_Load);
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -262,14 +380,25 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
-        private System.Windows.Forms.CheckedListBox checkedListBox2;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckedListBox Renovation;
+        private System.Windows.Forms.CheckedListBox Rooms;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.CheckedListBox Wall;
+        private System.Windows.Forms.CheckedListBox Otype;
+        private System.Windows.Forms.CheckedListBox Status;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
     }
 }

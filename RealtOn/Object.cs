@@ -12,7 +12,7 @@ namespace RealtOn
 {
    public class Object
     {
-
+      
         public enum Status
         {
             [Description("Активен")]
@@ -58,8 +58,7 @@ namespace RealtOn
 
         public static string GetDescription(Enum enumElement)
         {
-
-         
+                    
             Type type = enumElement.GetType();
 
             MemberInfo[] memInfo = type.GetMember(enumElement.ToString());
@@ -73,13 +72,13 @@ namespace RealtOn
             return enumElement.ToString();
         }
 
-        public static DataSet GetObjectsList(int page)
+        public static DataSet GetObjectsList(int page, string filtr)
         {
 
             string sConnectionString = "Data Source=ТИНА-ПК\\SQLEXPRESS;Initial Catalog=realton;Integrated Security=True";
             SqlConnection objConn  = new SqlConnection(sConnectionString);
             objConn.Open();
-            SqlDataAdapter daobjects= new SqlDataAdapter("SELECT TOP 10 * FROM(Select Objects.id,area,floor,rooms, wall,renovation,year,Objects.type,price, FullName,Tel,Email from Objects left join Tickets on Tickets.objectId= Objects.id left join Clients on Clients.id=clientId ORDER BY Objects.id OFFSET "+(page*10)+" ROWS) aliasname", objConn);
+            SqlDataAdapter daobjects= new SqlDataAdapter("SELECT TOP 10 * FROM(Select Objects.id,area,floor,rooms, wall,renovation,year,Objects.type,price, FullName,Tel,Email from Objects left join Tickets on Tickets.objectId= Objects.id left join Clients on Clients.id=clientId "+filtr+" ORDER BY Objects.id OFFSET "+(page*10)+" ROWS) aliasname", objConn);
             DataSet dsobjects = new DataSet();
             daobjects.Fill(dsobjects, "Obj");
             return dsobjects;

@@ -16,5 +16,18 @@ namespace RealtOn
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (User.LogIn(textBox1.Text, textBox2.Text).ToString() == "error")
+                label1.Text = "Ошибка";
+            else
+            {
+                Form ifrm = new Objects();
+                ifrm.Show(); // отображаем Form1
+                this.Hide();
+
+            }
+        }
     }
 }
