@@ -12,6 +12,7 @@ namespace RealtOn
 {
     public partial class ObjectFilter : Form
     {   public string filtr;
+        public Dadata.Model.Suggestion<Dadata.Model.Address>[] array;
         public ObjectFilter()
         {
             InitializeComponent();
@@ -19,6 +20,9 @@ namespace RealtOn
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+           
+
             Form ifrm = new Objects(filtr);
             ifrm.Show(); // отображаем Form1
             this.Close();
@@ -65,7 +69,7 @@ namespace RealtOn
             if (textBox1.Text.ToString() != "")
             {
                 var dadata = new SuggestClientDadata();
-                Dadata.Model.Suggestion < Dadata.Model.Address>[] array = dadata.SuggestAddress(textBox1.Text.ToString()).ToArray();
+                array = dadata.SuggestAddress(textBox1.Text.ToString()).ToArray();
 
                 listBox1.Items.Clear();
                 listBox1.Visible = true;
@@ -139,6 +143,11 @@ namespace RealtOn
             ifrm.Show(); // отображаем Form1
            // this.Close(); // закрываем Form2 (this - текущая форма)
                           // не используйте данный способ, правильный ниже
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            new SuggestClientDadata().AddDB(array[0]);
         }
     }
 }

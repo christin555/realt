@@ -39,6 +39,7 @@ namespace RealtOn
         {
             dataGridView1.Columns["Params"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dataGridView1.Columns["Contacts"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dataGridView1.Columns["Address"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dataGridView1.RowTemplate.Height = 100;
             GetObjects(0);
            
@@ -61,6 +62,7 @@ namespace RealtOn
                 dataGridView1.Rows.Add();
                 dataGridView1.Rows[i].Cells["id"].Value = ds.Rows[i]["id"];
                 dataGridView1.Rows[i].Cells["Otype"].Value = Object.GetDescription((Object.OType)ds.Rows[i]["type"]);
+                dataGridView1.Rows[i].Cells["Address"].Value =ds.Rows[i]["address"];
                 dataGridView1.Rows[i].Cells["Params"].Value = "Отделка: " + Object.GetDescription((Object.Renovation)ds.Rows[i]["renovation"]) + Environment.NewLine+"Комн: " + ds.Rows[i]["rooms"] + Environment.NewLine +"Этаж: "+ ds.Rows[i]["floor"] + Environment.NewLine + "Площадь: " + ds.Rows[i]["area"] + Environment.NewLine + "Стены: " + Object.GetDescription((Object.Wall)ds.Rows[i]["wall"]) +Environment.NewLine + "Год: " + ds.Rows[i]["year"];
                 dataGridView1.Rows[i].Cells["price"].Value = String.Format("{0:C}", ds.Rows[i]["price"]);
                 dataGridView1.Rows[i].Cells["client"].Value = ds.Rows[i]["FullName"];
