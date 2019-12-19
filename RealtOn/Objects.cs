@@ -31,7 +31,7 @@ namespace RealtOn
         {
             Form ifrm = new Objects();
             ifrm.Show(); // отображаем Form1
-            this.Close(); // закрываем Form2 (this - текущая форма)
+          //  this.Close(); // закрываем Form2 (this - текущая форма)
                           // не используйте данный способ, правильный ниже
         }
 
@@ -65,7 +65,7 @@ namespace RealtOn
                 dataGridView1.Rows[i].Cells["Address"].Value =ds.Rows[i]["address"];
                 dataGridView1.Rows[i].Cells["Params"].Value = "Отделка: " + Object.GetDescription((Object.Renovation)ds.Rows[i]["renovation"]) + Environment.NewLine+"Комн: " + ds.Rows[i]["rooms"] + Environment.NewLine +"Этаж: "+ ds.Rows[i]["floor"] + Environment.NewLine + "Площадь: " + ds.Rows[i]["area"] + Environment.NewLine + "Стены: " + Object.GetDescription((Object.Wall)ds.Rows[i]["wall"]) +Environment.NewLine + "Год: " + ds.Rows[i]["year"];
                 dataGridView1.Rows[i].Cells["price"].Value = String.Format("{0:C}", ds.Rows[i]["price"]);
-                dataGridView1.Rows[i].Cells["client"].Value = ds.Rows[i]["FullName"];
+                dataGridView1.Rows[i].Cells["client"].Value = ds.Rows[i]["client"];
                 dataGridView1.Rows[i].Cells["contacts"].Value = "Тел.: " + ds.Rows[i]["tel"] + Environment.NewLine + "E-mail: " + ds.Rows[i]["email"];
           
             }
@@ -123,6 +123,16 @@ namespace RealtOn
         {
             filtr = "where Tickets.userId=1";
             GetObjects(0);
+        }
+
+            
+
+        private void dataGridView1_CellDoubleClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            string id = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+            Form ifrm = new ObjectTicketCard(id);
+            ifrm.Show();
+            //   this.Close();
         }
     }
 }
