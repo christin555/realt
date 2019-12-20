@@ -59,6 +59,8 @@ namespace RealtOn
             SqlDataAdapter docsticket= new SqlDataAdapter("Select doc,value from docs where ticketId = " + id + "", objConn);
             DataSet dsdocsticket = new DataSet();
             docsticket.Fill(dsdocsticket, "Docs");
+            objConn.Close();
+
             return dsdocsticket;
 
         }
@@ -67,9 +69,10 @@ namespace RealtOn
             string sConnectionString = "Data Source=ТИНА-ПК\\SQLEXPRESS;Initial Catalog=realton;Integrated Security=True";
             SqlConnection objConn = new SqlConnection(sConnectionString);
             objConn.Open();
-           new SqlCommand("if not EXISTS(Select id from docs where ticketid="+ idticket + " AND doc="+ iddoc + ") Insert into docs values('" + idticket + "','"+ iddoc + "','"+ filename+ "') else update docs set value='"+filename+ "' where ticketid=" + idticket + " AND doc=" + iddoc + "", objConn).ExecuteNonQuery();
-            
-         
+            new SqlCommand("if not EXISTS(Select id from docs where ticketid="+ idticket + " AND doc="+ iddoc + ") Insert into docs values('" + idticket + "','"+ iddoc + "','"+ filename+ "') else update docs set value='"+filename+ "' where ticketid=" + idticket + " AND doc=" + iddoc + "", objConn).ExecuteNonQuery();
+            objConn.Close();
+
+
         }
 
     }

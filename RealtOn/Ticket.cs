@@ -31,6 +31,8 @@ namespace RealtOn
             SqlDataAdapter daobjects = new SqlDataAdapter("Select tickets.id,status,FullName as 'User', stage,img,type,description from tickets left join users on users.id = userId where tickets.id = " + id + "", objConn);
             DataSet dsobjects = new DataSet();
             daobjects.Fill(dsobjects, "Ticket");
+            objConn.Close();
+        
             return dsobjects;
         }
   
@@ -41,8 +43,10 @@ namespace RealtOn
             string sConnectionString = "Data Source=ТИНА-ПК\\SQLEXPRESS;Initial Catalog=realton;Integrated Security=True";
             SqlConnection objConn = new SqlConnection(sConnectionString);
             objConn.Open();
-            string type = new SqlCommand("Select type from tickets where tickets.id = " + id + "", objConn).ExecuteScalar().ToString();     
+            string type = new SqlCommand("Select type from tickets where tickets.id = " + id + "", objConn).ExecuteScalar().ToString();
+            objConn.Close();
             return type;
+
         }
     }
 }

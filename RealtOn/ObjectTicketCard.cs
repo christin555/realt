@@ -32,7 +32,7 @@ namespace RealtOn
             label1.Text = "Заявка #" + id_ticket;    
             GetData();
             CurrentDocShow();
-            openFileDialog1.Filter = "Images|*.jpg";
+          
         }
         private void GetData()
         {    
@@ -176,9 +176,10 @@ namespace RealtOn
 
         private void button1_Click(object sender, EventArgs e)
         {
-            GC.Collect(1, GCCollectionMode.Forced);
+     
             string namefile = "";         
             var ofd = new OpenFileDialog();
+            ofd.Filter = "jpg|*.jpg";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 namefile = System.Guid.NewGuid() + ".jpeg";
@@ -187,7 +188,7 @@ namespace RealtOn
                 Doc.DocAdd(namefile, id_ticket, currentdoc);
                 label2.Text = "Документ загружен";
             }
-
+                //GC.Collect(5, GCCollectionMode.Optimized);
         }
 
         private void tabPage2_Click(object sender, EventArgs e)

@@ -78,6 +78,7 @@ namespace RealtOn
             SqlDataAdapter daobjects= new SqlDataAdapter("SELECT TOP 10 * FROM(Select Objects.id,area, adresses.value as address,floor,rooms, wall,renovation,year,Objects.type,price, FullName as client,Tel,Email from Objects left join Tickets on Tickets.objectId= Objects.id left join Clients on Clients.id=clientId left join adresses on adresses.id=addressId "+filtr+" ORDER BY Objects.id OFFSET "+(page*10)+" ROWS) aliasname", objConn);
             DataSet dsobjects = new DataSet();
             daobjects.Fill(dsobjects, "ObjList");
+            objConn.Close();       
             return dsobjects;
         }
         public static DataSet GetObject(string id)
@@ -89,6 +90,8 @@ namespace RealtOn
             SqlDataAdapter daobjects = new SqlDataAdapter("Select Objects.id,area, adresses.value as address,floor,rooms, areakitchen,windows,wall,renovation,year,Objects.type,price, FullName as client,Tel,Email from Objects left join Tickets on Tickets.objectId= Objects.id left join Clients on Clients.id=clientId left join adresses on adresses.id=addressId where objects.id =" + id+"", objConn);
             DataSet dsobjects = new DataSet();
             daobjects.Fill(dsobjects, "Obj");
+            objConn.Close();
+
             return dsobjects;
         }
         public static string GetTicketID(string id)
@@ -97,7 +100,9 @@ namespace RealtOn
             string sConnectionString = "Data Source=ТИНА-ПК\\SQLEXPRESS;Initial Catalog=realton;Integrated Security=True";
             SqlConnection objConn = new SqlConnection(sConnectionString);
             objConn.Open();
-            string idTicket = new SqlCommand("Select id from tickets where objectId =" + id + "", objConn).ExecuteScalar().ToString();      
+            string idTicket = new SqlCommand("Select id from tickets where objectId =" + id + "", objConn).ExecuteScalar().ToString();
+            objConn.Close();
+
             return idTicket;
         }
     }
