@@ -98,21 +98,21 @@ namespace RealtOn
           
             for (int i = 1; i < 4; i++) //ремонт
             {
-                Renovation.Items.Add(Object.GetDescription((Object.Renovation)i));
+                Renovation.Items.Add(Tools.GetDescription((Object.Renovation)i));
             }
 
             for (int i = 1; i < 5; i++) //стены
             {
-                Wall.Items.Add(Object.GetDescription((Object.Wall)i));
+                Wall.Items.Add(Tools.GetDescription((Object.Wall)i));
             }
 
             for (int i = 1; i <3; i++) //сТАТус
             {
-                Status.Items.Add(Object.GetDescription((Object.Status)i));
+                Status.Items.Add(Tools.GetDescription((Object.Status)i));
             }
             for (int i = 1; i < 5; i++) //сТАТус
             {
-                Otype.Items.Add(Object.GetDescription((Object.OType)i));
+                Otype.Items.Add(Tools.GetDescription((Object.OType)i));
             }
         }
 

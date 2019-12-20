@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -10,6 +11,16 @@ namespace RealtOn
 {
     class Ticket
     {
+        public enum TType
+        {
+            [Description("Продажа")]
+            Sell = 1,
+            [Description("Покупка")]
+            Buy
+        
+        }
+
+
 
         public static DataSet GetTicket(string id)
         {
@@ -21,6 +32,17 @@ namespace RealtOn
             DataSet dsobjects = new DataSet();
             daobjects.Fill(dsobjects, "Ticket");
             return dsobjects;
+        }
+  
+
+        public static string GetTypeTicket(string id)
+        {
+
+            string sConnectionString = "Data Source=ТИНА-ПК\\SQLEXPRESS;Initial Catalog=realton;Integrated Security=True";
+            SqlConnection objConn = new SqlConnection(sConnectionString);
+            objConn.Open();
+            string type = new SqlCommand("Select type from tickets where tickets.id = " + id + "", objConn).ExecuteScalar().ToString();     
+            return type;
         }
     }
 }

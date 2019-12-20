@@ -14,6 +14,9 @@ namespace RealtOn
     {
         public string id_object;
         public string id_ticket;
+        public string currentdoc;
+        DataTable ob; DataTable tk;
+        DataTable docs;
         public ObjectTicketCard(string _id)
         {
             id_object = _id;
@@ -22,18 +25,21 @@ namespace RealtOn
 
         private void ObjectCard_Load(object sender, EventArgs e)
         {
-                   
+        
             dataGridView1.RowTemplate.Height = 50;
             dataGridView2.RowTemplate.Height = 28;
             id_ticket = Object.GetTicketID(id_object);
             label1.Text = "Заявка #" + id_ticket;    
             GetData();
-         
+            CurrentDocShow();
+            openFileDialog1.Filter = "Images|*.jpg";
         }
         private void GetData()
-        { 
-            var ob = Object.GetObject(id_object).Tables[0];
-            var tk = Ticket.GetTicket(id_ticket).Tables[0];
+        {    
+            //tab1   
+
+             ob = Object.GetObject(id_object).Tables[0];
+             tk = Ticket.GetTicket(id_ticket).Tables[0];
 
       
             dataGridView1.Rows.Add(4);
@@ -61,17 +67,17 @@ namespace RealtOn
             dataGridView1.Rows[0].Cells[1].Value = "#"+ob.Rows[0]["id"];
             dataGridView1.Rows[1].Cells[1].Value = ob.Rows[0]["client"] +","+ Environment.NewLine + "тел." + ob.Rows[0]["tel"];
             dataGridView1.Rows[2].Cells[1].Value = tk.Rows[0]["user"];
-            dataGridView1.Rows[3].Cells[1].Value = Object.GetDescription((Object.OType)ob.Rows[0]["type"]);
+            dataGridView1.Rows[3].Cells[1].Value = Tools.GetDescription((Object.OType)ob.Rows[0]["type"]);
             dataGridView1.Rows[4].Cells[1].Value = String.Format("{0:C}", ob.Rows[0]["price"]);
 
             //2 бд
-            dataGridView2.Rows[0].Cells[1].Value = Object.GetDescription((Object.Renovation)ob.Rows[0]["renovation"]);
+            dataGridView2.Rows[0].Cells[1].Value = Tools.GetDescription((Object.Renovation)ob.Rows[0]["renovation"]);
             dataGridView2.Rows[1].Cells[1].Value = ob.Rows[0]["rooms"];
             dataGridView2.Rows[2].Cells[1].Value = "Площадь: " + ob.Rows[0]["area"]+ "кв.м";
             dataGridView2.Rows[3].Cells[1].Value = "Площадь: " + ob.Rows[0]["areakitchen"] + "кв.м";
             dataGridView2.Rows[4].Cells[1].Value = ob.Rows[0]["floor"];
-            dataGridView2.Rows[5].Cells[1].Value = Object.GetDescription((Object.Wall)ob.Rows[0]["wall"]);
-            dataGridView2.Rows[6].Cells[1].Value = Object.GetDescription((Object.Windows)ob.Rows[0]["windows"]);
+            dataGridView2.Rows[5].Cells[1].Value = Tools.GetDescription((Object.Wall)ob.Rows[0]["wall"]);
+            dataGridView2.Rows[6].Cells[1].Value = Tools.GetDescription((Object.Windows)ob.Rows[0]["windows"]);
             dataGridView2.Rows[7].Cells[1].Value = ob.Rows[0]["year"]+"г.";
             dataGridView2.Rows[8].Cells[1].Value = ob.Rows[0]["address"];
 
@@ -81,6 +87,20 @@ namespace RealtOn
             textBox3.ForeColor = System.Drawing.Color.Black;
 
             pictureBox1.Image = Properties.Resources.img_89501;
+
+            //tab2
+
+            var dl = Doc.GetDocsList(tk.Rows[0]["type"].ToString());
+            for (int i = 0; i < dl.Count(); i++)
+            {
+                dataGridView3.Rows.Add();
+                dataGridView3.Rows[i].Cells[0].Value = dl[i];
+                dataGridView3.Rows[i].Cells[1].Value = Tools.GetDescription((Doc.DocTicket)dl[i]);
+            }
+
+            docs = Doc.GetDocsTicket(id_ticket).Tables[0];
+            currentdoc = dataGridView3.Rows[0].Cells[0].Value.ToString();
+
 
         }
 
@@ -94,6 +114,83 @@ namespace RealtOn
         }
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+        private string FindCurrentValue(string cdoc)
+        {
+            string result = "null";
+            for (int i = 0; i < docs.Rows.Count; i++)
+            {
+                if (docs.Rows[i]["doc"].ToString() == cdoc)
+                {
+                    result = docs.Rows[i]["value"].ToString();
+                    break;
+                }
+            }
+            //  string[] doclist = Ticket.GetDoc(id_ticket);
+            return result;
+        }
+
+        private void CurrentDocShow()
+        {
+            try
+            {
+
+                label2.Text = Tools.GetDescription((Doc.DocTicket)Convert.ToInt32(currentdoc));
+                string value = FindCurrentValue(currentdoc);
+                if (value != "null")
+                    pictureBox7.Image = Image.FromFile(Application.StartupPath + @"..\..\..\docs\" + FindCurrentValue(currentdoc));
+                else
+                {
+                    pictureBox7.Image = null;
+                    label2.Text = "Загрузите документ";
+                }
+            }
+            catch { }
+        }
+
+        private void tabControl1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+           
+            currentdoc = dataGridView3.CurrentRow.Cells[0].Value.ToString();
+            CurrentDocShow();
+            
+          
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GC.Collect(1, GCCollectionMode.Forced);
+            string namefile = "";         
+            var ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                namefile = System.Guid.NewGuid() + ".jpeg";
+                pictureBox7.Image = Image.FromFile(ofd.FileName);
+                pictureBox7.Image.Save(Application.StartupPath + @"..\..\..\docs\" + namefile);
+                Doc.DocAdd(namefile, id_ticket, currentdoc);
+                label2.Text = "Документ загружен";
+            }
+
+        }
+
+        private void tabPage2_Click(object sender, EventArgs e)
         {
 
         }
