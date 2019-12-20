@@ -13,9 +13,9 @@ namespace RealtOn
     {
         public enum TType
         {
-            [Description("Продажа")]
+            [Description("ПРОДАЖА")]
             Sell = 1,
-            [Description("Покупка")]
+            [Description("ПОКУПКА")]
             Buy
         
         }
@@ -35,7 +35,20 @@ namespace RealtOn
         
             return dsobjects;
         }
-  
+        public static DataSet GetTicketsList(int page, string filtr)
+        {
+
+            string sConnectionString = "Data Source=ТИНА-ПК\\SQLEXPRESS;Initial Catalog=realton;Integrated Security=True";
+            SqlConnection objConn = new SqlConnection(sConnectionString);
+            objConn.Open();
+
+
+   SqlDataAdapter daobjects = new SqlDataAdapter("SELECT TOP 10 * FROM(Select Tickets.id, Tickets.description, Tickets.stage, Tickets.status, Tickets.type, Clients.FullName as Client, Users.FullName as 'User' from Tickets left join Clients on Clients.id = clientId left join Users on Users.id = userId " + filtr + " ORDER BY Tickets.id OFFSET " + (page * 10) + " ROWS) aliasname", objConn);
+            DataSet dsobjects = new DataSet();
+            daobjects.Fill(dsobjects, "ObjList");
+            objConn.Close();
+            return dsobjects;
+        }
 
         public static string GetTypeTicket(string id)
         {
@@ -43,9 +56,9 @@ namespace RealtOn
             string sConnectionString = "Data Source=ТИНА-ПК\\SQLEXPRESS;Initial Catalog=realton;Integrated Security=True";
             SqlConnection objConn = new SqlConnection(sConnectionString);
             objConn.Open();
-            string type = new SqlCommand("Select type from tickets where tickets.id = " + id + "", objConn).ExecuteScalar().ToString();
+            int type = Convert.ToInt32(new SqlCommand("Select type from tickets where tickets.id = " + id + "", objConn).ExecuteScalar());
             objConn.Close();
-            return type;
+            return Tools.GetDescription((Ticket.TType)type);
 
         }
     }

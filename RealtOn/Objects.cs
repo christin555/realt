@@ -134,5 +134,12 @@ namespace RealtOn
             ifrm.Show();
             //   this.Close();
         }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            Form ifrm = new Tickets();
+            ifrm.Show();
+            //   this.Close();
+        }
     }
 }
