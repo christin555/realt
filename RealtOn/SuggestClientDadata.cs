@@ -2,6 +2,7 @@
 using Dadata.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,7 @@ namespace RealtOn
             
                 var token = "518f96d435704b748e40b3f6a0aa18efea327334";
             this.api = new SuggestClient(token);
-           var query = new SuggestAddressRequest(data);
+            var query = new SuggestAddressRequest(data);
             query.locations = new[] {
                 new Address() { kladr_id  = "7200000000000" },
             };
@@ -35,6 +36,50 @@ namespace RealtOn
                 return response;
           
         }
+        public static DataSet findKladr(string data)
+        {
+            string query = "";
+            string response = "";
+            DataSet dsobjects = new DataSet();
+            string sConnectionString = "Data Source=ТИНА-ПК\\SQLEXPRESS;Initial Catalog=realton;Integrated Security=True";
+            SqlConnection objConn = new SqlConnection(sConnectionString);
+            objConn.Open();
+
+            var address = SuggestAddress(data).ToArray();
+
+            if (address[0].data.street != null)
+            {
+                response = address[0].data.street_kladr_id;
+                query=   "select addressId from Objects left join Adresses on Adresses.id = addressId left join Streets on Streets.id = streetId where street_kladr_id ='" + response+"'";
+
+            }
+            else if (address[0].data.settlement != null)
+            {
+           
+                response = address[0].data.settlement_kladr_id;
+                query = "select addressId from Objects left join Adresses on Adresses.id = addressId left join Settlements on Settlements.id = settlemetId where settlemet_kladr_id = '" + response + "'";
+
+            }
+            else if (address[0].data.city != null)
+            {
+         
+                response = address[0].data.city_district_kladr_id;
+                query = "select addressId from Objects left join Adresses on Adresses.id = addressId left join Cities on Cities.id = cityId where city_kladr_id = '" + response + "'";
+
+            }
+
+            if (response != "" && query!="")
+            {
+                SqlDataAdapter array = new SqlDataAdapter(query, objConn);
+                array.Fill(dsobjects, "Obj");
+          
+            }
+
+            objConn.Close();
+            return dsobjects;
+        }
+
+    
 
         public void AddDB(Dadata.Model.Suggestion<Dadata.Model.Address> address)
         {

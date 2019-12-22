@@ -21,13 +21,13 @@ namespace RealtOn
         private void button1_Click(object sender, EventArgs e)
         {
 
-           
+            constructQuery();
 
-            Form ifrm = new Objects(filtr);
-            ifrm.Show(); // отображаем Form1
-            this.Close();
+            //Form ifrm = new Objects(filtr);
+            //      ifrm.Show(); // отображаем Form1
+            //     this.Close();
             // richTextBox1.Text =  dadata.SuggestAddress(textBox1.Text.ToString()).ToString();
-           
+
         }
 
         private void comboBox1_KeyDown(object sender, KeyEventArgs e)
@@ -115,25 +115,45 @@ namespace RealtOn
                 Otype.Items.Add(Tools.GetDescription((Object.OType)i));
             }
         }
-
-        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void constructQuery()
+             
         {
-            //  richTextBox1.Clear();
-            // foreach (var index in Renovation.CheckedIndices)
-            // Renovation.CheckedIndices;
+         
             List<string> params_f = new List<string>();
-          
-           if(Renovation.CheckedIndices.Count > 0)
-                params_f.Add("renovation in(" +  string.Join(",", Renovation.CheckedIndices.Cast<int>().ToArray().Select((x => x + 1))) + ")");
-           if (Status.CheckedIndices.Count > 0)
-                params_f.Add("Objects.status in(" + string.Join(",", Status.CheckedIndices.Cast<int>().ToArray().Select((x => x + 1))) + ")");
-           if (Otype.CheckedIndices.Count > 0)
-                params_f.Add("Objects.type in(" + string.Join(",", Otype.CheckedIndices.Cast<int>().ToArray().Select((x => x + 1))) + ")");
-           if (Wall.CheckedIndices.Count > 0)
-                params_f.Add("Objects.wall in(" + string.Join(",", Wall.CheckedIndices.Cast<int>().ToArray().Select((x => x + 1))) + ")");
 
-            filtr = "where "+ string.Join(" and ", params_f.ToArray());
+            if (Renovation.CheckedIndices.Count > 0)
+                params_f.Add("renovation in(" + string.Join(",", Renovation.CheckedIndices.Cast<int>().ToArray().Select((x => x + 1))) + ")");
+            if (Status.CheckedIndices.Count > 0)
+                params_f.Add("Objects.status in(" + string.Join(",", Status.CheckedIndices.Cast<int>().ToArray().Select((x => x + 1))) + ")");
+            if (Otype.CheckedIndices.Count > 0)
+                params_f.Add("Objects.type in(" + string.Join(",", Otype.CheckedIndices.Cast<int>().ToArray().Select((x => x + 1))) + ")");
+            if (Wall.CheckedIndices.Count > 0)
+                params_f.Add("Objects.wall in(" + string.Join(",", Wall.CheckedIndices.Cast<int>().ToArray().Select((x => x + 1))) + ")");
+            if (Rooms.CheckedIndices.Count > 0)
+                params_f.Add("Objects.rooms in(" + string.Join(",", Wall.CheckedIndices.Cast<int>().ToArray().Select((x => x + 1))) + ")");
+
+          if(textBox2.Text !="")  params_f.Add("Objects.area < "+ textBox2.Text);
+          if (textBox3.Text != "")
+                params_f.Add("Objects.area > " + textBox3.Text);
+          if(numericUpDown1.Value !=0)
+                params_f.Add("Objects.floor = " + numericUpDown1.Value);
+
+            if (numericUpDown2.Value != 0)
+                params_f.Add("Objects.floors =" + numericUpDown1.Value);
+
+            if (textBox1.Text != "")
+            {
+                DataTable addresses= SuggestClientDadata.findKladr(textBox1.Text).Tables[0];
+                params_f.Add("Objects.addressId in( " + addresses.Rows[0][0]+")");
+            
+            }
+
+            filtr = "where " + string.Join(" and ", params_f.ToArray());
             richTextBox1.Text = filtr;
+        }
+            private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
 
         }
 

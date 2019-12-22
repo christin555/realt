@@ -108,7 +108,7 @@ namespace RealtOn
         {
             Form ifrm = new ObjectFilter();
             ifrm.Show(); // отображаем Form1
-            this.Close(); // закрываем Form2 (this - текущая форма)
+         //   this.Close(); // закрываем Form2 (this - текущая форма)
                           // не используйте данный способ, правильный ниже
         }
 
