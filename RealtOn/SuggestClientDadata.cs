@@ -22,10 +22,10 @@ namespace RealtOn
            
         }
 
-        public IEnumerable<Dadata.Model.Suggestion<Dadata.Model.Address>> SuggestAddress(string data)
+        public  IEnumerable<Dadata.Model.Suggestion<Dadata.Model.Address>> SuggestAddress(string data)
         {
             
-                var token = "518f96d435704b748e40b3f6a0aa18efea327334";
+            var token = "518f96d435704b748e40b3f6a0aa18efea327334";
             this.api = new SuggestClient(token);
             var query = new SuggestAddressRequest(data);
             query.locations = new[] {
@@ -45,26 +45,29 @@ namespace RealtOn
             SqlConnection objConn = new SqlConnection(sConnectionString);
             objConn.Open();
 
-            var address = SuggestAddress(data).ToArray();
+            var suggests = new SuggestClientDadata();
+        
+            var address = suggests.SuggestAddress(data).ToArray();
+
 
             if (address[0].data.street != null)
             {
                 response = address[0].data.street_kladr_id;
-                query=   "select addressId from Objects left join Adresses on Adresses.id = addressId left join Streets on Streets.id = streetId where street_kladr_id ='" + response+"'";
+                query= "select distinct addressId from Objects left join Adresses on Adresses.id = addressId left join Streets on Streets.id = streetId where street_kladr_id ='" + response+"'";
 
             }
             else if (address[0].data.settlement != null)
             {
            
                 response = address[0].data.settlement_kladr_id;
-                query = "select addressId from Objects left join Adresses on Adresses.id = addressId left join Settlements on Settlements.id = settlemetId where settlemet_kladr_id = '" + response + "'";
+                query = "select distinct  addressId from Objects left join Adresses on Adresses.id = addressId left join Settlements on Settlements.id = settlemetId where settlemet_kladr_id = '" + response + "'";
 
             }
             else if (address[0].data.city != null)
             {
          
                 response = address[0].data.city_district_kladr_id;
-                query = "select addressId from Objects left join Adresses on Adresses.id = addressId left join Cities on Cities.id = cityId where city_kladr_id = '" + response + "'";
+                query = "select distinct addressId from Objects left join Adresses on Adresses.id = addressId left join Cities on Cities.id = cityId where city_kladr_id = '" + response + "'";
 
             }
 

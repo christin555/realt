@@ -23,9 +23,9 @@ namespace RealtOn
 
             constructQuery();
 
-            //Form ifrm = new Objects(filtr);
-            //      ifrm.Show(); // отображаем Form1
-            //     this.Close();
+            Form ifrm = new Objects(filtr);
+            ifrm.Show(); // отображаем Form1
+           // this.Close();
             // richTextBox1.Text =  dadata.SuggestAddress(textBox1.Text.ToString()).ToString();
 
         }
@@ -110,7 +110,7 @@ namespace RealtOn
             {
                 Status.Items.Add(Tools.GetDescription((Object.Status)i));
             }
-            for (int i = 1; i < 5; i++) //сТАТус
+            for (int i = 1; i < 5; i++) //type
             {
                 Otype.Items.Add(Tools.GetDescription((Object.OType)i));
             }
@@ -130,7 +130,7 @@ namespace RealtOn
             if (Wall.CheckedIndices.Count > 0)
                 params_f.Add("Objects.wall in(" + string.Join(",", Wall.CheckedIndices.Cast<int>().ToArray().Select((x => x + 1))) + ")");
             if (Rooms.CheckedIndices.Count > 0)
-                params_f.Add("Objects.rooms in(" + string.Join(",", Wall.CheckedIndices.Cast<int>().ToArray().Select((x => x + 1))) + ")");
+                params_f.Add("Objects.rooms in(" + string.Join(",", Rooms.CheckedIndices.Cast<int>().ToArray().Select((x => x + 1))) + ")");
 
           if(textBox2.Text !="")  params_f.Add("Objects.area < "+ textBox2.Text);
           if (textBox3.Text != "")
@@ -144,12 +144,12 @@ namespace RealtOn
             if (textBox1.Text != "")
             {
                 DataTable addresses= SuggestClientDadata.findKladr(textBox1.Text).Tables[0];
-                params_f.Add("Objects.addressId in( " + addresses.Rows[0][0]+")");
-            
+                params_f.Add("Objects.addressId in( " +string.Join(",", addresses.Rows.Cast<DataRow>().ToArray().Select( x=>x[0].ToString())) +")");
             }
 
             filtr = "where " + string.Join(" and ", params_f.ToArray());
-            richTextBox1.Text = filtr;
+         //   richTextBox1.Text = filtr;
+
         }
             private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -167,7 +167,9 @@ namespace RealtOn
 
         private void button2_Click(object sender, EventArgs e)
         {
-            new SuggestClientDadata().AddDB(array[0]);
+
+            //   new SuggestClientDadata().AddDB(array[0]);
+           
         }
     }
 }

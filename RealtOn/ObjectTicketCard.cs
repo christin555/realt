@@ -86,29 +86,41 @@ namespace RealtOn
 
 
             textBox3.Text = tk.Rows[0]["description"].ToString();
-            textBox3.BackColor = Color.White;
+                    textBox3.BackColor = Color.White;
             textBox3.ForeColor = System.Drawing.Color.Black;
-            pictureBox1.Image = Image.FromFile(Application.StartupPath + @"..\..\..\img\" + tk.Rows[0]["img"].ToString());
-
+            try
+            {
+                pictureBox1.Image = Image.FromFile(Application.StartupPath + @"..\..\..\img\" + tk.Rows[0]["img"].ToString());
+            }
+            catch { }
+            label1.Text = Ticket.GetTypeTicket(id_ticket);
+            label2.Text = Ticket.GetStatusTicket(id_ticket);
+            label3.Text = Ticket.GetStageTicket(id_ticket);
             //tab2
 
             docs = Doc.GetDocsTicket(id_ticket).Tables[0];
             var dl = Doc.GetDocsList(tk.Rows[0]["type"].ToString());
+
+            
+
             for (int i = 0; i < dl.Count(); i++)
             {
                 dataGridView3.Rows.Add();
                 dataGridView3.Rows[i].Cells[0].Value = dl[i];
                 dataGridView3.Rows[i].Cells[1].Value = Tools.GetDescription((Doc.DocTicket)dl[i]);
 
-                if (FindCurrentValue(i.ToString()) != "null")
+                if (FindCurrentValue(dl[i].ToString()) != "null")
                 {
                     dataGridView3.Rows[i].Cells[2].Value = "Загружено✓";
+                  //  dataGridView3.Rows[i].Cells[2].Value = FindCurrentValue(i.ToString());
+
                     dataGridView3.Rows[i].Cells[2].Style.BackColor = Color.FromArgb(119, 221, 119);
 
                 }
                 else
                 {
                     dataGridView3.Rows[i].Cells[2].Value = "Загрузите документ!";
+                  //  dataGridView3.Rows[i].Cells[2].Value = FindCurrentValue(i.ToString());
                     dataGridView3.Rows[i].Cells[2].Style.BackColor = Color.FromArgb(221, 173, 175);
                 }
 
@@ -201,9 +213,24 @@ namespace RealtOn
                 Doc.DocAdd(namefile, id_ticket, currentdoc);
                 docs = Doc.GetDocsTicket(id_ticket).Tables[0];
                 label2.Text = "Документ загружен";
+                checkdocstatus();
+
             }
         
             //  GC.Collect(5, GCCollectionMode.Optimized);
+        }
+
+        private void checkdocstatus()
+        {
+            bool check;
+        
+            for (int i = 0; i < dataGridView3.Rows.Count; i++)
+            {
+                if (dataGridView3.Rows[i].Cells[2].Style.BackColor == Color.FromArgb(221, 173, 175))
+                {
+                   // check++;
+                }
+            }
         }
 
         private void tabPage2_Click(object sender, EventArgs e)
