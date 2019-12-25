@@ -25,7 +25,7 @@ namespace RealtOn
 
             Form ifrm = new Objects(filtr);
             ifrm.Show(); // отображаем Form1
-           // this.Close();
+            this.Close();
             // richTextBox1.Text =  dadata.SuggestAddress(textBox1.Text.ToString()).ToString();
 
         }
