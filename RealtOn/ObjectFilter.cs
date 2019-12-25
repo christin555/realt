@@ -147,7 +147,7 @@ namespace RealtOn
                 params_f.Add("Objects.addressId in( " +string.Join(",", addresses.Rows.Cast<DataRow>().ToArray().Select( x=>x[0].ToString())) +")");
             }
 
-            filtr = "where " + string.Join(" and ", params_f.ToArray());
+            filtr = "where " + string.Join(" and ", params_f.ToArray()) +" and tickets.type =1";
          //   richTextBox1.Text = filtr;
 
         }
@@ -160,16 +160,22 @@ namespace RealtOn
         private void pictureBox3_Click(object sender, EventArgs e)
         {
             Form ifrm = new Objects();
-            ifrm.Show(); // отображаем Form1
-           // this.Close(); // закрываем Form2 (this - текущая форма)
-                          // не используйте данный способ, правильный ниже
+            ifrm.Show();
+            this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
 
-            //   new SuggestClientDadata().AddDB(array[0]);
+          new SuggestClientDadata().AddDB(array[0]);
            
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            Form ifrm = new Tickets();
+            ifrm.Show(); // отображаем Form1
+             this.Close();
         }
     }
 }

@@ -13,14 +13,21 @@ namespace RealtOn
     public partial class Objects : Form
     {
         public string filtr;
+        public string idUser;
         public Objects()
         {
+            idUser = Auth.id;
+            filtr = " where tickets.type=1 ";
             InitializeComponent();
         }
         public Objects(string _filtr)
-        {
-            InitializeComponent();
+      {
+            idUser = Auth.id;
             filtr = _filtr;
+           
+            InitializeComponent();
+            
+            
         }
         private void pictureBox5_Click(object sender, EventArgs e)
         {
@@ -31,7 +38,7 @@ namespace RealtOn
         {
             Form ifrm = new Objects();
             ifrm.Show(); // отображаем Form1
-          //  this.Close(); // закрываем Form2 (this - текущая форма)
+            this.Close(); // закрываем Form2 (this - текущая форма)
                           // не используйте данный способ, правильный ниже
         }
 
@@ -108,7 +115,7 @@ namespace RealtOn
         {
             Form ifrm = new ObjectFilter();
             ifrm.Show(); // отображаем Form1
-         //   this.Close(); // закрываем Form2 (this - текущая форма)
+             this.Close(); // закрываем Form2 (this - текущая форма)
                           // не используйте данный способ, правильный ниже
         }
 
@@ -121,25 +128,25 @@ namespace RealtOn
 
         private void button2_Click(object sender, EventArgs e)
         {
-            filtr = "where Tickets.userId=1";
+            filtr = " where Tickets.userId=" + idUser + " ";
             GetObjects(0);
         }
-
+  
             
-
+  
         private void dataGridView1_CellDoubleClick_1(object sender, DataGridViewCellEventArgs e)
         {
             string id = dataGridView1.CurrentRow.Cells[0].Value.ToString();
             Form ifrm = new status(id);
             ifrm.Show();
-            //   this.Close();
+            this.Close();
         }
 
         private void pictureBox4_Click(object sender, EventArgs e)
         {
             Form ifrm = new Tickets();
-            ifrm.Show();
-            //   this.Close();
+            ifrm.Show(); 
+            this.Close();
         }
     }
 }

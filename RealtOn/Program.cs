@@ -15,7 +15,7 @@ namespace RealtOn
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new  Objects());
+            Application.Run(new  Auth());
         }
     }
 }

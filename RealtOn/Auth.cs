@@ -12,6 +12,7 @@ namespace RealtOn
 {
     public partial class Auth : Form
     {
+        public static string id;
         public Auth()
         {
             InitializeComponent();
@@ -23,11 +24,17 @@ namespace RealtOn
                 label1.Text = "Ошибка";
             else
             {
+                id = User.LogIn(textBox1.Text, textBox2.Text).ToString();
                 Form ifrm = new Objects();
                 ifrm.Show(); // отображаем Form1
                 this.Hide();
 
             }
+        }
+
+        private void Auth_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

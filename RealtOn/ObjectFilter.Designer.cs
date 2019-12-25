@@ -189,6 +189,7 @@
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox4.TabIndex = 9;
             this.pictureBox4.TabStop = false;
+            this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
             // 
             // pictureBox3
             // 
@@ -318,13 +319,12 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(693, 47);
+            this.button2.Location = new System.Drawing.Point(620, 279);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(143, 23);
             this.button2.TabIndex = 24;
-            this.button2.Text = "button2";
+            this.button2.Text = "Занести адрес в базу";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Visible = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // ObjectFilter

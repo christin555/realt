@@ -13,14 +13,19 @@ namespace RealtOn
     public partial class Tickets : Form
     {
         public string filtr;
+        public string idUser;
+
         public Tickets()
         {
+            idUser = Auth.id;
             InitializeComponent();
         }
-
+     
         private void Tickets_Load(object sender, EventArgs e)
         {
-
+            dataGridView1.RowTemplate.Height = 100;
+            dataGridView1.Columns["Description"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dataGridView1.Columns["User"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             GetTickets(0);
 
         }
@@ -41,12 +46,12 @@ namespace RealtOn
             {
                 dataGridView1.Rows.Add();
                 dataGridView1.Rows[i].Cells["id"].Value = ds.Rows[i]["id"];
-                dataGridView1.Rows[i].Cells["Stage"].Value = ds.Rows[i]["Stage"];
-                dataGridView1.Rows[i].Cells["Status"].Value = ds.Rows[i]["Status"];
+                dataGridView1.Rows[i].Cells["Stage"].Value = Tools.GetDescription((Ticket.Stage)ds.Rows[i]["Stage"]);
+                dataGridView1.Rows[i].Cells["Status"].Value = Tools.GetDescription((Ticket.Status)ds.Rows[i]["Status"]);
                 dataGridView1.Rows[i].Cells["Ttype"].Value = Tools.GetDescription((Ticket.TType)ds.Rows[i]["type"]);
                 dataGridView1.Rows[i].Cells["Description"].Value = ds.Rows[i]["Description"];
             //    dataGridView1.Rows[i].Cells["User"].Value = "Отделка: " + Tools.GetDescription((Object.Renovation)ds.Rows[i]["renovation"]) + Environment.NewLine + "Комн: " + ds.Rows[i]["rooms"] + Environment.NewLine + "Этаж: " + ds.Rows[i]["floor"] + Environment.NewLine + "Площадь: " + ds.Rows[i]["area"] + Environment.NewLine + "Стены: " + Tools.GetDescription((Object.Wall)ds.Rows[i]["wall"]) + Environment.NewLine + "Год: " + ds.Rows[i]["year"];
-            //    dataGridView1.Rows[i].Cells["price"].Value = String.Format("{0:C}", ds.Rows[i]["price"]);
+            //   dataGridView1.Rows[i].Cells["price"].Value = String.Format("{0:C}", ds.Rows[i]["price"]);
                 dataGridView1.Rows[i].Cells["Client"].Value = ds.Rows[i]["Client"];
                // dataGridView1.Rows[i].Cells["Contacts"].Value = "Тел.: " + ds.Rows[i]["tel"] + Environment.NewLine + "E-mail: " + ds.Rows[i]["email"];
                 dataGridView1.Rows[i].Cells["User"].Value = ds.Rows[i]["User"];
@@ -62,13 +67,7 @@ namespace RealtOn
 
         }
 
-        private void dataGridView1_CellDoubleClick_1(object sender, DataGridViewCellEventArgs e)
-        {
-            string id = dataGridView1.CurrentRow.Cells[0].Value.ToString();
-            Form ifrm = new status(id);
-            ifrm.Show();
-            //   this.Close();
-        }
+   
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -78,7 +77,7 @@ namespace RealtOn
 
         private void button2_Click(object sender, EventArgs e)
         {
-            filtr = "where Tickets.userId=1";
+            filtr = " where Tickets.userId="+ idUser + " ";
             GetTickets(0);
         }
 
@@ -92,6 +91,21 @@ namespace RealtOn
         {
             button5.Enabled = ((dataGridView1.Rows.Count < 10) ? false : true);
             button4.Enabled = ((Convert.ToInt32(textBox1.Text) == 1) ? false : true);
+        }
+
+        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int id = Ticket.GetObject(dataGridView1.CurrentRow.Cells[0].Value.ToString());
+            Form ifrm = new status(id.ToString());
+            ifrm.Show();
+             this.Close();
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            Form ifrm = new Objects();
+            ifrm.Show();
+            this.Close();
         }
     }
 }

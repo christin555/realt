@@ -114,8 +114,20 @@ namespace RealtOn
             string sConnectionString = "Data Source=ТИНА-ПК\\SQLEXPRESS;Initial Catalog=realton;Integrated Security=True";
             SqlConnection objConn = new SqlConnection(sConnectionString);
             objConn.Open();
-            new SqlCommand("update tickets set stage="+stage+" where id = " + id_ticket + "", objConn).ExecuteNonQuery();
+            new SqlCommand("update tickets set stage=" + stage + " where id = " + id_ticket + "", objConn).ExecuteNonQuery();
             objConn.Close();
         }
+
+        public static int GetObject(string id_ticket)
+        {
+
+            string sConnectionString = "Data Source=ТИНА-ПК\\SQLEXPRESS;Initial Catalog=realton;Integrated Security=True";
+            SqlConnection objConn = new SqlConnection(sConnectionString);
+            objConn.Open();
+            int id_obj = Convert.ToInt32(new SqlCommand("Select objectId from tickets where tickets.id = " + id_ticket + "", objConn).ExecuteScalar());
+            objConn.Close();
+            return id_obj;
+        }
+
     }
 }

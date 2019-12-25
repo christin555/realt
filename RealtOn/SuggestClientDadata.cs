@@ -50,7 +50,7 @@ namespace RealtOn
             var address = suggests.SuggestAddress(data).ToArray();
 
 
-            if (address[0].data.street != null)
+           if (address[0].data.street != null)
             {
                 response = address[0].data.street_kladr_id;
                 query= "select distinct addressId from Objects left join Adresses on Adresses.id = addressId left join Streets on Streets.id = streetId where street_kladr_id ='" + response+"'";
@@ -60,14 +60,15 @@ namespace RealtOn
             {
            
                 response = address[0].data.settlement_kladr_id;
-                query = "select distinct  addressId from Objects left join Adresses on Adresses.id = addressId left join Settlements on Settlements.id = settlemetId where settlemet_kladr_id = '" + response + "'";
+                query = "select distinct Adresses.id from Adresses left join Settlements on Settlements.id = settlementId where settlement_kladr_id ='" + response + "'";
 
             }
+
             else if (address[0].data.city != null)
             {
          
-                response = address[0].data.city_district_kladr_id;
-                query = "select distinct addressId from Objects left join Adresses on Adresses.id = addressId left join Cities on Cities.id = cityId where city_kladr_id = '" + response + "'";
+                response = address[0].data.city_kladr_id;
+                query = "select distinct Adresses.id from Adresses left join Cities on Cities.id = cityId where city_kladr_id = '" + response + "'";
 
             }
 

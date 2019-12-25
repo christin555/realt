@@ -43,11 +43,69 @@ namespace RealtOn
             label1.Text = "Заявка #" + id_ticket;
             tabledoc.Columns[1].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             tabledoc.RowTemplate.Height = 50;
-            GetDataTab1();
+            UpdateLabel();
+            if (stage.Text == "Продажа")
+            {
+                GetDataTab1();
+            } 
+            else
+                GetDataTab1Pok();
+
             GetDataTab2();
             CurrentDocShow();
             checkdocstatus();
-            UpdateLabel();
+           
+           
+        }
+
+        private void GetDataTab1Pok()
+        {
+            ob = Object.GetObject(id_object).Tables[0];
+            tk = Ticket.GetTicket(id_ticket).Tables[0];
+
+
+            dataGridView1.Rows.Add(4);
+            dataGridView2.Rows.Add(8);
+            //1 т
+            dataGridView1.Rows[0].Cells[0].Value = "Потребности:";
+            dataGridView1.Rows[1].Cells[0].Value = "Клиент";
+            dataGridView1.Rows[2].Cells[0].Value = "Риэлтор";
+            dataGridView1.Rows[3].Cells[0].Value = "Тип";
+            dataGridView1.Rows[4].Cells[0].Value = "Стоимость";
+            dataGridView1.Rows[4].Height = 50;
+
+            //2 т
+            dataGridView2.Rows[0].Cells[0].Value = "Отделка";
+            dataGridView2.Rows[1].Cells[0].Value = "Кол-во комнат";
+            dataGridView2.Rows[2].Cells[0].Value = "Площадь";
+            dataGridView2.Rows[3].Cells[0].Value = "Площадь кухни";
+            dataGridView2.Rows[4].Cells[0].Value = "Этаж";
+            dataGridView2.Rows[5].Cells[0].Value = "Стены";
+            dataGridView2.Rows[6].Cells[0].Value = "Окна";
+            dataGridView2.Rows[7].Cells[0].Value = "Год постройки/сдачи";
+            dataGridView2.Rows[8].Cells[0].Value = "Адрес";
+            dataGridView2.Rows[8].Height = 28;
+
+            //1 бд
+            
+            dataGridView1.Rows[1].Cells[1].Value = ob.Rows[0]["client"] + "," + Environment.NewLine + "тел." + ob.Rows[0]["tel"];
+            dataGridView1.Rows[2].Cells[1].Value = tk.Rows[0]["user"];
+            dataGridView1.Rows[3].Cells[1].Value = Tools.GetDescription((Object.OType)ob.Rows[0]["type"]);
+            dataGridView1.Rows[4].Cells[1].Value = String.Format("{0:C}", ob.Rows[0]["price"]);
+
+            //2 бд
+            dataGridView2.Rows[0].Cells[1].Value = Tools.GetDescription((Object.Renovation)ob.Rows[0]["renovation"]);
+            dataGridView2.Rows[1].Cells[1].Value = ob.Rows[0]["rooms"];
+            dataGridView2.Rows[2].Cells[1].Value = "Площадь: " + ob.Rows[0]["area"] + "кв.м";
+            dataGridView2.Rows[3].Cells[1].Value = "Площадь: " + ob.Rows[0]["areakitchen"] + "кв.м";
+            dataGridView2.Rows[4].Cells[1].Value = ob.Rows[0]["floor"];
+            dataGridView2.Rows[5].Cells[1].Value = Tools.GetDescription((Object.Wall)ob.Rows[0]["wall"]);
+            dataGridView2.Rows[6].Cells[1].Value = Tools.GetDescription((Object.Windows)ob.Rows[0]["windows"]);
+            dataGridView2.Rows[7].Cells[1].Value = ob.Rows[0]["year"] + "г.";
+            dataGridView2.Rows[8].Cells[1].Value = ob.Rows[0]["address"];
+
+
+            textBox3.Text = tk.Rows[0]["description"].ToString();
         }
 
         private void GetDataTab2()
@@ -158,8 +216,8 @@ namespace RealtOn
         {
 
             Form ifrm = new Objects();
-            ifrm.Show(); // отображаем Form1
-                         // this.Close(); // закрываем Form2 (this - текущая форма)
+            ifrm.Show(); 
+           this.Close();
 
         }
 
@@ -281,32 +339,7 @@ namespace RealtOn
 
         private void button2_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.Filter = "docx|*.docx";
-            if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
-                return;
-            // получаем выбранный файл
-            string fileName = saveFileDialog1.FileName;
-
-
-            //  string filepath = "C:\\Users\\Тина\\Downloads\\";
-            //     string fileName = "Тестовый файл.docx";
-            //Create a WebClient to use as our download proxy for the program.
-            WebClient webClient = new WebClient();
-
-            if (File.Exists(fileName) != true)// если файла нет то просто скачиваем
-            {
-                WebClient client = new WebClient();
-                client.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
-                client.DownloadFileAsync(new Uri("https://vscode.ru/filesForArticles/test.docx"), fileName);
-            }
-            else// если файл есть, удаляем и скачиваем новый
-            {
-                File.Delete(fileName);
-                WebClient client = new WebClient();
-                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
-                client.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
-                client.DownloadFileAsync(new Uri("https://vscode.ru/filesForArticles/test.docx"), fileName);
-            }
+            down("https://realty.yandex.ru/export/dokumenty/kuplya-prodazha_dogovor.docx", "Договор купли-продажи недвижимого имущества");
         }
 
 
@@ -320,19 +353,19 @@ namespace RealtOn
         //it's misleading, it just means that the Async process completed.
         private void Completed(object sender, AsyncCompletedEventArgs e)
         {
-            MessageBox.Show("Download completed!");
+            MessageBox.Show("Файл загружен!");
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void print(string name)
         {
             using (PrintDialog pd = new PrintDialog())
             {
                 pd.ShowDialog();
 
-                ProcessStartInfo info = new ProcessStartInfo("C:\\Users\\Тина\\Desktop\\Вариант06.docx");
+                ProcessStartInfo info = new ProcessStartInfo(Application.StartupPath + @"..\..\..\docs\"+name+".docx");
 
                 info.Verb = "PrintTo";
-              //gt  info.Arguments = pd.PrinterSettings.PrinterName;
+               info.Arguments = "\"" + pd.PrinterSettings.PrinterName + "\"";
 
                 info.CreateNoWindow = true;
 
@@ -340,6 +373,72 @@ namespace RealtOn
 
                 Process.Start(info);
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+          
+            print("Договор купли-продажи недвижимого имущества");         
+          
+        }
+        private void down(string URL, string Name)
+        {
+            saveFileDialog1.FileName = Name;
+            saveFileDialog1.Filter = "docx|*.docx";
+            if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+            // получаем выбранный файл   
+         
+            string fileName = saveFileDialog1.FileName;
+
+   
+            //  string filepath = "C:\\Users\\Тина\\Downloads\\";
+            //     string fileName = "Тестовый файл.docx";
+            //Create a WebClient to use as our download proxy for the program.
+            WebClient webClient = new WebClient();
+
+            if (File.Exists(fileName) != true)// если файла нет то просто скачиваем
+            {
+                WebClient client = new WebClient();
+                client.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
+                client.DownloadFileAsync(new Uri(URL), fileName);
+            }
+            else// если файл есть, удаляем и скачиваем новый
+            {
+                File.Delete(fileName);
+                WebClient client = new WebClient();
+                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
+                client.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
+                client.DownloadFileAsync(new Uri(URL), fileName);
+            }
+        }
+        private void button5_Click(object sender, EventArgs e)
+        {
+            down("https://realty.yandex.ru/export/dokumenty/kuplya-prodazha_peredatochnyj-akt.docx", "Передаточный акт к договору купли-продажи");
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            down("https://realty.yandex.ru/export/dokumenty/kuplya-prodazha_raspiska.docx", "Расписка о получении денежных средств");
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            print("Передаточный акт к договору купли - продажи");
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            print("Расписка о получении денежных средств");
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            Form ifrm = new Tickets();
+            ifrm.Show(); // отображаем Form1
+            this.Close();
         }
     }
 }
