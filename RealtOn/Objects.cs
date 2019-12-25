@@ -130,7 +130,7 @@ namespace RealtOn
         private void dataGridView1_CellDoubleClick_1(object sender, DataGridViewCellEventArgs e)
         {
             string id = dataGridView1.CurrentRow.Cells[0].Value.ToString();
-            Form ifrm = new ObjectTicketCard(id);
+            Form ifrm = new status(id);
             ifrm.Show();
             //   this.Close();
         }

@@ -13,9 +13,9 @@ namespace RealtOn
     {
         public enum TType
         {
-            [Description("ПРОДАЖА")]
+            [Description("Продажа")]
             Sell = 1,
-            [Description("ПОКУПКА")]
+            [Description("Покупка")]
             Buy
 
         }
@@ -34,7 +34,7 @@ namespace RealtOn
         }
         public enum Stage
         {
-            [Description("Данные заполены")]
+            [Description("Данные заполнены")]
             Open = 1,
             [Description("Документы загружены")]
             Closed,
@@ -103,10 +103,19 @@ namespace RealtOn
             string sConnectionString = "Data Source=ТИНА-ПК\\SQLEXPRESS;Initial Catalog=realton;Integrated Security=True";
             SqlConnection objConn = new SqlConnection(sConnectionString);
             objConn.Open();
-            int stage = Convert.ToInt32(new SqlCommand("Select status from tickets where tickets.id = " + id + "", objConn).ExecuteScalar());
+            int stage = Convert.ToInt32(new SqlCommand("Select stage from tickets where tickets.id = " + id + "", objConn).ExecuteScalar());
             objConn.Close();
             return Tools.GetDescription((Ticket.Stage)stage);
 
+        }
+
+        public static void ChangeStatus(int stage, string id_ticket)
+        {
+            string sConnectionString = "Data Source=ТИНА-ПК\\SQLEXPRESS;Initial Catalog=realton;Integrated Security=True";
+            SqlConnection objConn = new SqlConnection(sConnectionString);
+            objConn.Open();
+            new SqlCommand("update tickets set stage="+stage+" where id = " + id_ticket + "", objConn).ExecuteNonQuery();
+            objConn.Close();
         }
     }
 }
